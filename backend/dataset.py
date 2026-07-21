@@ -16,7 +16,7 @@
 import pymysql
 
 class Dataset():
-    def __init__(self,database,host='localhost',port=3306,user='root',password='root'):
+    def __init__(self,database,host='localhost',port=3306,user='root',password=''):
         self.host = host
         self.port = port
         self.user = user
