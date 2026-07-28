@@ -2,14 +2,11 @@ import re
 import execjs
 import requests
 import json
-from flask import Flask,request
-from flask_cors import CORS
 from flask import Flask
 from flask import request,Response
 from flask_cors import CORS
 from zai import ZhipuAiClient
 from dataset import Dataset
-
 
 obj=Dataset('AI_chat')
 obj1=Dataset('PlayLets')
@@ -163,42 +160,77 @@ def search_playlet():
     results=response.json()['data']['contents']
     content=[]
     year=0
-    for result in results:
-        year_list=result['data'].get("yearList",'')
-        kind = []
-        if year_list:
-            year=1
-            title=year_list[0]['title']
-            img=year_list[0]['pic']
-            update=year_list[0]['playTime']
-            kind.append(year_list[0]['desc'][0]['text'])
-            story=year_list[0]['story']
-            url_str = year_list[0]['sourceList'][0]['url']
-            id = re.findall('\d+', url_str)[0]
-        else:
-            title = result['data']['title']
-            img = result['data']['pic']
-            update = result['data']['playTime']
-            kind.append(result['data']['desc'][0]['text'])
-            story = result['data']['story']
-            url_str = result['data']['sourceList'][0]['url']
-            id = re.findall('\d+', url_str)[0]
-        data={
-            "title":title,
-            "img":img,
-            "kind":kind,
-            "clipId":id,
-            "year":year,
-            "story":story,
-            "update":update,
-            "progress": 0
+    index=0
+    short_video=[]
+    kind_=[]
+    result=results[0]
+    name = result['data'].get('name', '')
+    if name:
+        title = result['data']['name']
+        img = result['data']['pic']
+        kind_.append(result['data']['desc'][0]['text'])
+        kind_.append(result['data']['desc'][1]['text'])
+        story = result['data']['story']
+        id = ''
+        for i in range(0, len(result['data']['tablist'])):
+            short_video.extend(result['data']['tablist'][i]['data'])
+        data = {
+            "title": title,
+            "img": img,
+            "kind": kind_,
+            "clipId": id,
+            "year": year,
+            "story": story,
+            "progress": 0,
+            "short_video": short_video,
+            "name":True
         }
         content.append(data)
-    result={
-        "code":200,
-        "data":content
-    }
-    return json.dumps(result, ensure_ascii=False)
+        result = {
+            "code": 200,
+            "data": content
+        }
+        return json.dumps(result, ensure_ascii=False)
+
+    if not name:
+        for result in results:
+            year_list=result['data'].get("yearList",'')
+            title = result['data'].get('title','')
+            kind = []
+            if year_list:
+                year=1
+                title=year_list[0]['title']
+                img=year_list[0]['pic']
+                kind.append(year_list[0]['desc'][0]['text'])
+                story=year_list[0]['story']
+                url_str = year_list[0]['sourceList'][0]['url']
+                id = re.findall('\d+', url_str)[0]
+                short_video = year_list[0]['sourceList'][0]['videoList']
+            elif title:
+                title = result['data']['title']
+                img = result['data']['pic']
+                kind.append(result['data']['desc'][0]['text'])
+                story = result['data']['story']
+                url_str = result['data']['sourceList'][0]['url']
+                id = re.findall('\d+', url_str)[0]
+                short_video = result['data']['sourceList'][0]['videoList']
+            data={
+                "title":title,
+                "img":img,
+                "kind":kind,
+                "clipId":id,
+                "year":year,
+                "story":story,
+                "progress": 0,
+                "short_video":short_video,
+                "name": False
+            }
+            content.append(data)
+        result={
+            "code":200,
+            "data":content
+        }
+        return json.dumps(result, ensure_ascii=False)
 
 @app.route('/api/selector')
 def api_selector():
@@ -413,7 +445,7 @@ def add_history():
     if res:
         sql=f"""delete from history where card LIKE '%{card_}%'"""
         obj1.change(sql)
-    sql=f"""insert into history values(0,'{card}')"""
+    sql=f"""insert into history(id,card) values(0,'{card}')"""
     obj1.change(sql)
     return "添加成功"
 

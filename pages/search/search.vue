@@ -30,16 +30,20 @@
 		<view class="info">
 			&emsp;&emsp;{{cards[page-1].story}}
 		</view>
+		
+		<ShortVideoVue :cards="cards"></ShortVideoVue>
 	</view>
 </template>
 
 <script>
 	import WaterFall from "/component/WaterFall/WaterFall"
+	import ShortVideoVue from "../../component/ShortVideo/ShortVideo.vue"
 	// import {playletStore} from "/stores"
 	// const store=playletStore()
 	export default {
 		components:{
-			WaterFall
+			WaterFall,
+			ShortVideoVue
 		},
 		data() {
 			return {
@@ -88,6 +92,7 @@
 					page:this.page
 				})
 				if(res.code===200){
+					console.log(res.data);
 					this.cards=res.data;
 					if(this.cards.length==0){
 						uni.showToast({

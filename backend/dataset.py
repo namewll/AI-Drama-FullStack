@@ -13,10 +13,25 @@
 #    PRIMARY KEY (`id`)
 #  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
+# CREATE TABLE `history` (
+#   `id` int NOT NULL AUTO_INCREMENT,
+#   `card` varchar(5000) NOT NULL,
+# 	`update_time` datetime not null,
+#   PRIMARY KEY (`id`)
+# ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+#
+# create trigger update_trigger
+# before insert on history
+# for each ROW
+# set new.update_time=NOW()
+
 import pymysql
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 class Dataset():
-    def __init__(self,database,host='localhost',port=3306,user='root',password=''):
+    def __init__(self,database,host='localhost',port=3306,user='root',password=os.getenv("DB_PASSWORD")):
         self.host = host
         self.port = port
         self.user = user
