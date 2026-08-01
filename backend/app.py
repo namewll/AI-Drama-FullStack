@@ -195,7 +195,6 @@ def search_playlet():
     if not name:
         for result in results:
             year_list=result['data'].get("yearList",'')
-            title = result['data'].get('title','')
             kind = []
             if year_list:
                 year=1
@@ -206,7 +205,7 @@ def search_playlet():
                 url_str = year_list[0]['sourceList'][0]['url']
                 id = re.findall('\d+', url_str)[0]
                 short_video = year_list[0]['sourceList'][0]['videoList']
-            elif title:
+            else:
                 title = result['data']['title']
                 img = result['data']['pic']
                 kind.append(result['data']['desc'][0]['text'])
@@ -501,5 +500,34 @@ def select_total_like():
         return json.dumps(result, ensure_ascii=False)
     return ""
 
+@app.route('/api/register')
+def api_register():
+    phone=request.args.get('re_phone')
+    password=request.args.get('re_password')
+    sql=f"""select * from register where phone='{phone}' and password='{password}'"""
+    res=obj1.select(sql)
+    if not res:
+        sql=f"""insert into register values(0,'{phone}','{password}')"""
+        obj1.change(sql)
+        return json.dumps({
+            "code":200
+        })
+    return json.dumps({
+        "code":400
+    })
+
+@app.route('/api/login')
+def api_login():
+    phone=request.args.get('phone')
+    password=request.args.get('password')
+    sql=f"""select * from register where phone='{phone}' and password='{password}'"""
+    res=obj1.select(sql)
+    if res:
+        return json.dumps({
+            "code":200
+        })
+    return json.dumps({
+        "code":400
+    })
 if __name__ == "__main__":
     app.run(port=5001, debug=True)

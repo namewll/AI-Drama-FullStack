@@ -1,0 +1,21 @@
+{
+    "id": "yxtbxm-login1",
+    "name": "简约登录注册页面模板",
+    "displayName": "简约登录注册页面模板",
+    "version": "1.0.0",
+    "description": "使用vue3的语法编写的登录页面，页面跳转，方法定义，验证码倒计时",
+    "keywords": [
+        "登录页面/验证码登录/验证码倒计时"
+    ],
+    "dcloudext": {
+        "type": "pagetemplate-vue",
+        "sale": {
+            "regular": {
+                "price": "0.00"
+            },
+            "sourcecode": {
+                "price": "0.00"
+            }
+        }
+    }
+}

@@ -15,20 +15,26 @@
 		<view v-show="!start_search" class="search_history">
 			<view class="search_history_top">
 				<view class="history_title">搜索历史</view>
-				<uni-icons type="trash-filled" size="25" color="#c2c2c2" @click="clear_block"></uni-icons>
+				
+				<view class="total_state">
+					<view class="box_state" @click="change_state">
+						<view class="info_">{{state ? "展开":"收起"}}</view>
+						<uni-icons :type="state ? 'down':'up'" size="20"></uni-icons>
+						<view>|</view>
+					</view>
+					<uni-icons type="trash-filled" size="25" color="#c2c2c2" @click="clear_block"></uni-icons>
+				</view>
+				
 			</view>
 			<view class="history_content">
-				<view class="item" v-for="item,index in search_blocks" :key="index" @click="block_search(item)" @longpress="testRightClick(index,item)">{{item}}</view>
+				<view class="item" :class="{'active':state==true}" v-for="item,index in search_blocks" :key="index" @click="block_search(item)" @longpress="testRightClick(index,item)">{{item}}</view>
 			</view>
 		</view>
 		
 		<WaterFall :cards="cards"></WaterFall>
 		
-		<view class="update_time">
-			{{cards[page-1].update}}
-		</view>
 		<view class="info">
-			&emsp;&emsp;{{cards[page-1].story}}
+			&emsp;&emsp;{{cards[0]['story']}}
 		</view>
 		
 		<ShortVideoVue :cards="cards"></ShortVideoVue>
@@ -52,16 +58,30 @@
 				search_blocks:[],
 				page:1,
 				limit:1,
-				cards:[]
+				cards:[{"story":''}],
+				state:true
 			}
 		},
 		methods: {
+			async change_state(){
+				this.state=!this.state
+				if(this.state==true){
+					this.search_blocks=this.search_blocks.slice(0,6)
+				}
+				else{
+					await this.show_search_info()
+				}
+			},
 			async confirm_search(){
 				if(this.search_value.trim().length>0){
 					this.start_search=true
 					this.start_search_()
 				}
 				await this.show_search_info()
+				uni.pageScrollTo({
+					scrollTop: -99999,
+					duration: 0
+				})
 				
 			},
 			async click_search(){
@@ -70,6 +90,10 @@
 					this.start_search_()
 				}
 				await this.show_search_info()
+				uni.pageScrollTo({
+					scrollTop: -99999,
+					duration: 0
+				})
 				
 			},
 			input_content(){
@@ -135,8 +159,7 @@
 		},
 		async onShow(){
 			await this.show_search_info()
-		},
-		onReachBottom(){
+			this.search_blocks=this.search_blocks.slice(0,6)
 		}
 	}
 </script>
@@ -185,6 +208,29 @@
 			.history_title{
 				font-weight: bold;
 				font-size: 16px;
+			}
+			.total_state{
+				width: 130px;
+				height: 30px;
+				display: flex;
+				justify-content: space-around;
+				.box_state{
+					width: 100px;
+					height: 100%;
+					display: flex;
+					justify-content: space-around;
+					.info_,uni-icons,view{
+						text-align: center;
+						width: 50px;
+						height: 100%;
+					}
+					.info_{
+						color: deepskyblue;
+					}
+					view{
+						color: #e8e8e8;
+					}
+				}
 			}
 		}
 		.history_content{
