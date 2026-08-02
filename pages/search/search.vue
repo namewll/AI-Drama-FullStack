@@ -78,6 +78,7 @@
 					this.start_search_()
 				}
 				await this.show_search_info()
+				this.search_blocks=this.search_blocks.slice(0,6)
 				uni.pageScrollTo({
 					scrollTop: -99999,
 					duration: 0
@@ -90,6 +91,7 @@
 					this.start_search_()
 				}
 				await this.show_search_info()
+				this.search_blocks=this.search_blocks.slice(0,6)
 				uni.pageScrollTo({
 					scrollTop: -99999,
 					duration: 0
