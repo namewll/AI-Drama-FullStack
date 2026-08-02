@@ -1,7 +1,7 @@
 <template>
 	<view v-for="item in cards[0]['short_video']" class="total" @click="go_video(item['url'])">
 		<view class="left">
-			<image class='image' :src="item['pic']"></image>
+			<image class='image' :src="item['pic']" mode="widthFix"></image>
 			<view class="during" v-if="cards[0]['name']===false">{{item['updateInfo']}}</view>
 		</view>
 		
