@@ -1,0 +1,6 @@
+# 前端Vue文件识别
+*.vue linguist-language=Vue
+# JavaScript脚本
+*.js linguist-language=JavaScript
+# Flask后端Python代码
+*.py linguist-language=Python
