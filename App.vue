@@ -33,4 +33,8 @@
 		}
 	}
 	/* #endif */
+	::selection {
+	    background: #3b78e7;
+	    color: #fff;
+	}
 </style>
