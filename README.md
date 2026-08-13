@@ -112,35 +112,55 @@ pip install -r requirements.txt
 
 # 启动 Flask 服务
 python app.py
+```
 
 ## 🗄️ 数据库配置
 
-# sql="""create database if not exists AI_chat"""
-# CREATE TABLE `chat_info` (
-#   `id` int NOT NULL AUTO_INCREMENT COMMENT '序号',
-#   `duser` varchar(500) NOT NULL COMMENT '提问',
-#   `AI` varchar(500) NOT NULL COMMENT '回答',
-#   PRIMARY KEY (`id`)
-# ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+### 1. 创建数据库
 
-# CREATE TABLE `teacher_info` (
-#    `id` int NOT NULL AUTO_INCREMENT COMMENT '序号',
-#    `duser` varchar(500) NOT NULL COMMENT '提问',
-#    `AI` varchar(500) NOT NULL COMMENT '回答',
-#    PRIMARY KEY (`id`)
-#  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+sql="""create database if not exists AI_chat"""
 
-# CREATE TABLE `history` (
-#   `id` int NOT NULL AUTO_INCREMENT,
-#   `card` varchar(5000) NOT NULL,
-# 	`update_time` datetime not null,
-#   PRIMARY KEY (`id`)
-# ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
-#
-# create trigger update_trigger
-# before insert on history
-# for each ROW
-# set new.update_time=NOW()
+### 2. 数据表结构
+
+聊天记录表（chat_info）
+CREATE TABLE `chat_info` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `duser` varchar(500) NOT NULL COMMENT '提问',
+  `AI` varchar(500) NOT NULL COMMENT '回答',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+教师问答表（teacher_info）
+CREATE TABLE `teacher_info` (
+   `id` int NOT NULL AUTO_INCREMENT COMMENT '序号',
+   `duser` varchar(500) NOT NULL COMMENT '提问',
+   `AI` varchar(500) NOT NULL COMMENT '回答',
+   PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+ 
+历史记录表（history）
+CREATE TABLE `history` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `card` varchar(5000) NOT NULL,
+	`update_time` datetime not null,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+### 3. 触发器（自动更新时间）
+
+create trigger update_trigger
+before insert on history
+for each ROW
+set new.update_time=NOW()
+
+### 4. 环境变量配置
+env
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=your-password
+MYSQL_DATABASE=AI_chat
+MYSQL_DATABASE=PlayLets
 
 ## 📁 项目结构
 text
@@ -168,7 +188,7 @@ AI-Drama-FullStack/
 ├── .gitignore                  # Git 忽略文件
 ├── LICENSE                     # MIT 开源协议
 └── README.md                   # 项目说明
-🏆 技术亮点
+##🏆 技术亮点
 1. 🔐 API 签名破解
 成功破解芒果 TV 搜索接口的 MD5 动态签名机制，通过 JS 逆向分析还原签名算法，实现数据的高效采集。
 
