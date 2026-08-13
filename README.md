@@ -117,8 +117,9 @@ python app.py
 ## 🗄️ 数据库配置
 
 ### 1. 创建数据库
-
-sql="""create database if not exists AI_chat"""
+```sql
+create database if not exists AI_chat
+```
 
 ### 2. 数据表结构
 
