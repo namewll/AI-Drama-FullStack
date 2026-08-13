@@ -40,7 +40,7 @@
 				})
 			}
 		},
-		onMount(){
+		mounted(){
 			console.log(this.cards);
 		}
 	}
