@@ -250,12 +250,25 @@ AI-Drama-FullStack/
 前端采用 UniApp 负责界面交互与用户体验，后端采用 Flask 提供功能 API 接口，职责边界清晰，便于团队协作与后期维护。
 
   
-📄 License
-MIT License © 2026 namew11
+## 📄 开源协议
 
-🙏 致谢
-数据来源：芒果TV
+本项目采用 [MIT License](LICENSE) 开源许可证。
 
-开发框架：UniApp
+Copyright © 2026 namewll
 
-后端框架：Flask
+
+## 🙏 致谢
+
+- **数据来源**：芒果TV
+- **开发框架**：UniApp
+- **后端框架**：Flask
+- **AI 引擎**：智谱 GLM-4.7-Flash
+
+
+## 📬 联系方式
+
+- GitHub: [namewll](https://github.com/namewll)
+- 项目地址: [AI-Drama-FullStack](https://github.com/namewll/AI-Drama-FullStack)
+
+
+**⭐ 如果这个项目对你有帮助，欢迎 Star 支持！**
