@@ -8,7 +8,7 @@
 					<text class="text_title">{{card.title}}</text>
 				</view>
 				<view class="tag">
-					<text class="text_tag">{{card.kind.join("·")}}</text>
+					<text class="text_tag">{{(card.kind || []).join("·")}}</text>
 				</view>
 			</view>
 		</view>
@@ -20,7 +20,7 @@
 					<text class="text_title">{{card.title}}</text>
 				</view>
 				<view class="tag">
-					<text class="text_tag">{{card.kind.join("·")}}</text>
+					<text class="text_tag">{{(card.kind || []).join("·")}}</text>
 				</view>
 			</view>
 		</view>
