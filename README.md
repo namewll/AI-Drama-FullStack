@@ -170,25 +170,36 @@ MYSQL_DATABASE=PlayLets
 ```text
 AI-Drama-FullStack/
 ├── pages/                      # 页面目录
+│   ├── login/                  # 登录注册页
 │   ├── index/                  # 首页
 │   ├── detail/                 # 详情页
 │   ├── search/                 # 搜索页
+│   ├── fill/                 	# 分类筛选页
 │   ├── my/                     # 我的页面
-│   └── webview/                # WebView 播放页
+│   └── AI/                		# AI对话页
 ├── components/                 # 公共组件
+│   ├── ShortVideo/             # 短视频组件
+│   ├── Swiper/                 # 轮播图组件
+│   ├── ThreeCard/              # 三卡片组件
+│   └── WaterFall/              # 瀑布流组件
 ├── stores/                     # 状态管理
 ├── utils/                      # 工具函数
 ├── static/                     # 静态资源
 ├── uni_modules/                # uni-ui 组件
 ├── backend/                    # 后端服务
 │   ├── app.py                  # Flask 主程序
-│   ├── dataset.py              # 数据集处理
+│   ├── dataset.py              # 数据库处理封装类
+│   ├── history_analyse.ipynb   # 用户偏好数据分析
 │   └── search_decrypt.js       # 搜索解密脚本（JS逆向分析）
 ├── screenshots/                # 项目截图
 ├── App.vue                     # 应用入口
 ├── main.js                     # 主文件
 ├── manifest.json               # 项目配置
 ├── pages.json                  # 页面路由
+├── utils/                    	# 工具函数
+│   └── api.js               	# API 接口统一封装（含 MD5 签名生成、请求拦截）
+├── stores/                   	# 状态管理（Pinia）
+│   └── index.js            	# 全局状态（用户信息、收藏、历史记录等）
 ├── .gitignore                  # Git 忽略文件
 ├── LICENSE                     # MIT 开源协议
 └── README.md                   # 项目说明
