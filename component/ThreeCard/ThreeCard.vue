@@ -3,7 +3,7 @@
 		<view class="item" v-for="card,index in cards" @click="go_detail(card.clipId)" @longpress="testRightClick(index,card)">
 			<image :src="card.img" class="image"></image>
 			<view class="name">{{card.title}}</view>
-			<view v-show="!(state<=2)" class="info">{{card.type[0]}}·全{{card.episode_cnt}}集</view>
+			<view v-show="!(state<=2)" class="info">{{(card.type && card.type[0]) || '未分类'}}·全{{card.episode_cnt}}集</view>
 			<view v-show="state==0" class="info">观看至{{Math.floor((card.progress+1)/card.episode_cnt*100)}}%</view>
 			<view v-show="state==1 || state==2" class="info">看至{{card.progress+1}}集/全{{card.episode_cnt}}集</view>		
 		</view>
