@@ -1,7 +1,6 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -33,4 +32,8 @@
 		}
 	}
 	/* #endif */
+	::selection {
+	    background: #3b78e7;
+	    color: #fff;
+	}
 </style>

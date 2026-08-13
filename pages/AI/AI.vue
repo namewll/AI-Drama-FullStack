@@ -356,7 +356,7 @@
 				font-size: 18px;
 				border-radius: 10px;
 				max-width: 50%;
-				word-wrap: break-word;
+				overflow-wrap: break-word;
 				padding:10px;
 			}
 		}
@@ -377,7 +377,7 @@
 				font-size: 18px;
 				border-radius: 10px;
 				max-width: 50%;
-				word-wrap: break-word;
+				overflow-wrap: break-word;
 				padding:10px;
 			}
 		}

@@ -1,4 +1,4 @@
-import re
+import re,os,time
 import execjs
 import requests
 import json
@@ -7,10 +7,14 @@ from flask import request,Response
 from flask_cors import CORS
 from zai import ZhipuAiClient
 from dataset import Dataset
+from dotenv import load_dotenv
+load_dotenv()
 
+if not os.path.exists('static/uploads'):
+    os.makedirs('static/uploads')
 obj=Dataset('AI_chat')
 obj1=Dataset('PlayLets')
-client = ZhipuAiClient(api_key="f488910fe9d5446ea1f9c4de3a42fe3f.WSDQYYvvJX61HG09")
+client = ZhipuAiClient(api_key=os.getenv('API_KEY'))
 messages=[{"role":"system","content":"""身份设定：你名为剧小迷，专属电视剧领域专家，覆盖国内外所有题材电视剧（古装、现代、悬疑、言情、刑侦、家庭、奇幻、年代等）。
 能力范围：
 1. 根据用户喜好精准推荐适配剧集；
@@ -160,7 +164,6 @@ def search_playlet():
     results=response.json()['data']['contents']
     content=[]
     year=0
-    index=0
     short_video=[]
     kind_=[]
     result=results[0]
@@ -254,6 +257,18 @@ def playlet_screen():
     page=request.args.get("page")
     limit=request.args.get("limit")
     url = "https://pianku.api.mgtv.com/rider/list/pcweb/v3"
+    if not background:
+        background='a1'
+    if not topic:
+        topic='a1'
+    if not setting:
+        setting='all'
+    if not gender:
+        gender='0'
+    if not time:
+        time='a1'
+    if not sort_type:
+        sort_type='c2'
     params = {
         "allowedRC": "1",
         "platform": "pcweb",
@@ -322,7 +337,10 @@ def change_role():
 3. 指导前端、后端、数据库、Linux运维等实战开发；
 4. 帮助调试代码，分析错误原因并提供解决方案。
 回复要求：用通俗语言解释概念，代码带注释说明，回答详细准确，不清楚的内容直接如实说明,单次回答字数不超120。
-对话边界：专注计算机技术相关问题，非技术话题礼貌说明无法解答。
+对话边界：专注计算机技术相关问题，非技术话题礼貌说明无法解答。你是一名严谨智能对话助手，回答必须精准、实事求是。
+不知道的内容不要编造，语言流畅自然，不要过度啰嗦。
+禁止凭空捏造信息，输出逻辑连贯，贴合用户问题。
+
 """}]
     elif(ai_role=='剧小迷'):
         messages = [{"role": "system", "content": """身份设定：你名为剧小迷，专属电视剧领域专家，覆盖国内外所有题材电视剧（古装、现代、悬疑、言情、刑侦、家庭、奇幻、年代等）。
@@ -332,20 +350,23 @@ def change_role():
         3. 查询参演演员、播出平台、上映年份；
         4. 推荐风格高度相似的替代剧集。
         回复要求：语气亲切自然，单次回答字数不超120，不编造不存在的剧集信息，不清楚的内容直接如实说明。
-        对话边界：仅回应电视剧相关问题，无关话题礼貌说明无法解答。
+        对话边界：仅回应电视剧相关问题，无关话题礼貌说明无法解答。你是一名严谨智能对话助手，回答必须精准、实事求是。
+        不知道的内容不要编造，语言流畅自然，不要过度啰嗦。
+        禁止凭空捏造信息，输出逻辑连贯，贴合用户问题。
+
         """}]
     return "角色更换成功"
 
 @app.route('/api/chat')
 def chat():
-    # print(messages)
     data=request.args.get("content")
     role = request.args.get('role')
     messages.append({"role":"user","content":data})
     def gen_stream():
         response=client.chat.completions.create(
-            model="glm-5.2",
+            model="glm-4.7-flash",
             messages=messages,
+            extra_body={'temperature':0.3},
             stream=True
         )
         total_result=''
@@ -500,10 +521,10 @@ def select_total_like():
         return json.dumps(result, ensure_ascii=False)
     return ""
 
-@app.route('/api/register')
+@app.route('/api/register',methods=['POST'])
 def api_register():
-    phone=request.args.get('re_phone')
-    password=request.args.get('re_password')
+    phone=request.form.get('re_phone')
+    password=request.form.get('re_password')
     sql=f"""select * from register where phone='{phone}' and password='{password}'"""
     res=obj1.select(sql)
     if not res:
@@ -516,10 +537,10 @@ def api_register():
         "code":400
     })
 
-@app.route('/api/login')
+@app.route('/api/login',methods=['POST'])
 def api_login():
-    phone=request.args.get('phone')
-    password=request.args.get('password')
+    phone=request.form.get('phone')
+    password=request.form.get('password')
     sql=f"""select * from register where phone='{phone}' and password='{password}'"""
     res=obj1.select(sql)
     if res:
@@ -529,5 +550,37 @@ def api_login():
     return json.dumps({
         "code":400
     })
+@app.route('/api/upload',methods=['POST'])
+def load_image():
+    file=request.files.get('image')
+    filename = str(int(time.time()*1000)) + '.jpg'
+    file.save(os.path.join('static/uploads', filename))
+    url = f"http://127.0.0.1:5001/static/uploads/{filename}"
+    return json.dumps({
+        "code": 200,
+        "image_url": url
+    })
+
+@app.route('/api/get/Image')
+def get_image():
+    res=[]
+    load_images=os.listdir('static/uploads')
+    res.append(r'http://127.0.0.1:5001/static/uploads/'+load_images[-1])
+    print(res)
+    return json.dumps(res)
+
+@app.route('/api/swiper')
+def swiper():
+    response = requests.get(
+        'https://dc.bz.mgtv.com/dynamic/v1/channel/index/fdde58ed-1e9f-4f5e-962b-4dedcf312006/9.0.4-1/10.0/10000000/space/0/4/4?osType=window&seqId=fdde58ed-1e9f-4f5e-962b-4dedcf312006&device=pc&playList=[%7B%22vid%22:24437770,%22cid%22:783747,%22updateTime%22:1786077461,%22watchTime%22:102,%22isEnd%22:0%7D,%7B%22vid%22:24527504,%22cid%22:894445,%22updateTime%22:1786072673,%22watchTime%22:1,%22isEnd%22:0%7D,%7B%22vid%22:24476835,%22cid%22:756916,%22updateTime%22:1786072668,%22watchTime%22:93,%22isEnd%22:0%7D,%7B%22vid%22:24517654,%22cid%22:781917,%22updateTime%22:1786025236,%22watchTime%22:13,%22isEnd%22:0%7D,%7B%22vid%22:23379947,%22cid%22:771610,%22updateTime%22:1784530578,%22watchTime%22:8,%22isEnd%22:0%7D,%7B%22vid%22:24477031,%22cid%22:756916,%22updateTime%22:1784470352,%22watchTime%22:300,%22isEnd%22:0%7D,%7B%22vid%22:24477754,%22cid%22:756916,%22updateTime%22:1784470052,%22watchTime%22:40,%22isEnd%22:1%7D,%7B%22vid%22:24477752,%22cid%22:756916,%22updateTime%22:1784470011,%22watchTime%22:44,%22isEnd%22:1%7D,%7B%22vid%22:24477743,%22cid%22:756916,%22updateTime%22:1784469967,%22watchTime%22:31,%22isEnd%22:1%7D,%7B%22vid%22:24477744,%22cid%22:756916,%22updateTime%22:1784469934,%22watchTime%22:37,%22isEnd%22:1%7D]',
+        headers=headers
+    )
+    data_json = response.json()
+    items = data_json['data'][1]['DSLList'][0]['data']['items']
+    result = {
+        "code":200,
+        "data":items
+    }
+    return json.dumps(result)
 if __name__ == "__main__":
     app.run(port=5001, debug=True)

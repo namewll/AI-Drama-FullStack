@@ -2,7 +2,8 @@
 	<view>
 		<view class="head_wrapper">
 			<view class="left">
-				<image class="image" src="/static/my_image/img1.jpeg"></image>
+				<image class="image" :src="image_load[0]" @click="previewImage(image_load)"></image>
+				<uni-icons type="upload" size="20" style="position: relative;top: 60px;" @click="chooseImage()"></uni-icons>
 			</view>
 			<view class="right">
 				<view class="my_name">{{my_info.name}}</view>
@@ -23,7 +24,7 @@
 		</view>
 		
 		<view class="last">
-			<ThreeCard :cards="cards" :state="state"></ThreeCard>
+			<ThreeCard :cards="cards" :state="state" @refresh-data="handleRefreshData"></ThreeCard>
 		</view>
 	</view>
 </template>
@@ -43,10 +44,44 @@
 				history:[],
 				collect:[],
 				like:[],
-				cards:[]
+				cards:[],
+				image_load:[]
 			}
 		},
 		methods: {
+			async chooseImage() {
+			    uni.chooseImage({
+			        count: 1,
+			        success: (res) => {
+			            let tempPath = res.tempFilePaths[0];
+			            uni.uploadFile({
+			                url: 'http://127.0.0.1:5001/api/upload',
+			                filePath: tempPath,
+			                name: 'image',
+							success: async(uploadRes) => {
+								await this.get_image_load()  
+							}
+			            })
+			        }
+			    })
+			},
+			async get_image_load(){
+				let{data:res}=await uni.$http.get('/api/get/Image')
+				this.image_load=res
+				console.log("yuyu");
+				console.log(this.image_load);
+			},
+			previewImage(current){
+				uni.previewImage({
+					urls:this.image_load,
+					current
+				})
+			},
+			async handleRefreshData(){
+				await this.get_total_history()
+				await this.get_total_collect()
+				await this.get_total_like()
+			},
 			async get_my_info(){
 				let {data:res}=await uni.$http.get("/api/user/user_info",{
 					user_id:"u_001"
@@ -91,6 +126,7 @@
 		async onShow(){
 			await this.get_my_info()
 			await this.get_total_history()
+			await this.get_image_load()
 		}
 	}
 </script>

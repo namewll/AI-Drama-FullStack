@@ -3,7 +3,8 @@
 		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "",
+				"disableScroll": true
 			}
 		},
 		{
@@ -56,6 +57,12 @@
 		},
 		{
 			"path": "component/ShortVideo/ShortVideo",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "component/Swiper/Swiper",
 			"style": {
 				"navigationBarTitleText": ""
 			}

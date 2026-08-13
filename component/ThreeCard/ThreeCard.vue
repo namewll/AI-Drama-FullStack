@@ -34,6 +34,7 @@
 								card:card.clipId
 							})
 							uni.showToast({ title: '已删除' })
+							this.$emit('refresh-data')
 						}
 					}
 				})

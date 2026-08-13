@@ -10,15 +10,18 @@
 				</button>
 			</view>
 		</view>
+		<SwiperVue :cards="cards"></SwiperVue>
 		<WaterFallComponent :cards="cards"></WaterFallComponent>
 	</view>
 </template>
 
 <script>
+	import SwiperVue from "../../component/Swiper/Swiper.vue"
 	import WaterFallComponent from "/component/WaterFall/WaterFall.vue"
 	export default {
 		components:{
-			WaterFallComponent
+			WaterFallComponent,
+			SwiperVue
 		},
 		data() {
 			return {

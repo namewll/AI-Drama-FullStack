@@ -99,8 +99,13 @@
 			input_content(){
 				this.start_search=false
 			},
-			clear_content(){
+			async clear_content(){
 				this.start_search=false
+				await this.show_search_info()
+				uni.pageScrollTo({
+					scrollTop: -99999,
+					duration: 0
+				})
 			},
 			async clear_block(){
 				let{data:res}=await uni.$http.get('/delete/block')

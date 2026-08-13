@@ -21,7 +21,7 @@
 		
 		<view class="brif_info_wrapper">
 			<view class="brif_info" :class="{'active':state==false}">
-				{{detail.info}}
+				<text selectable='true'>{{detail.info}}</text>
 			</view>
 			<view class="info_state_total" v-if="detail.info.length>50" @click="change_state">
 				<view class="info_state">{{state ? "展开":"收起"}}</view>
@@ -54,10 +54,10 @@
 				
 				<scroll-view class="scroll_low hide_scrollbar" scroll-x="true" scroll-left="0" show-scrollbar="false">
 					<view class="item" 
-					v-for="item,index in show_episode[cut_state]"
-					:key="index"
-					@click="chang_epi(index,cut_state)"
-					:class="{'active':index==detail.progress}">{{item}}</view>
+					v-for="item in show_episode[cut_state]"
+					:key="item"
+					@click="chang_epi(item,cut_state)"
+					:class="{'active':item==detail.progress}">{{item}}</view>
 				</scroll-view>
 			</view>
 		</view>
@@ -65,11 +65,11 @@
 		<view class="coll_like_wrapper">
 			<view class="collect_wrapper" @click="change_coll">
 				<text>{{detail.collect?"已收藏":"收藏"}}</text>
-				<uni-icons :type="detail.collect?'star-filled':'star'" size="20" :color="detail.collect?'#FFD700':''"></uni-icons>
+				<uni-icons :type="detail.collect?'star-filled':'star'" size="20" :color="detail.collect?'#ffba15':''"></uni-icons>
 			</view>
 			<view class="like_wrapper" @click="change_like">
 				<text>{{detail.like?"已点赞":"点赞"}}</text>
-				<uni-icons :type="detail.like?'heart-filled':'heart'" size="20" :color="detail.like?'#f53f3f':''"></uni-icons>
+				<uni-icons :type="detail.like?'heart-filled':'heart'" size="20" :color="detail.like?'#fe3259':''"></uni-icons>
 			</view>
 		</view>
 	</view>	
@@ -318,7 +318,7 @@
 						margin-right: 10px;
 						color: #a8a8a8;
 						&.active{
-							color: #02d0e7;
+							color: #00aa9e;
 							font-weight: 600;
 						}
 					}
@@ -334,7 +334,7 @@
 						display: inline-block;
 						width: 45px;
 						height: 45px;
-						background-color: #e2e2e2;
+						background-color: #f1f1f1;
 						// background-color: #f8d629;
 						line-height: 45px;
 						text-align: center;
@@ -342,7 +342,9 @@
 						margin-right: 10px;
 						font-weight: 500;
 						&.active{
-							background-color: rgba(35, 221, 206, 0.6);
+							// background-color: rgba(35, 221, 206, 0.6);
+							background-color: #e4faf8;
+							color: #00aa9e;
 							font-weight: 600;
 							font-size: 18px;
 						}

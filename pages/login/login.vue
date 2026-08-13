@@ -11,13 +11,13 @@
 			</view>
 			
 			<view class="input" v-show="state==0">
-				<input type="text" v-model="phone" class="phone" placeholder="请输入您的账号"/>
-				<input type="password" v-model="password" class="passwd" placeholder="请输入您的密码"/>
+				<input type="text" v-model="phone" class="phone" placeholder="请输入您的账号" maxlength="11"/>
+				<input type="password" v-model="password" class="passwd" placeholder="请输入您的密码" maxlength="6"/>
 				<button @click="start_login">登录</button>
 			</view>
 			<view class="input" v-show="state==1">
-				<input type="text" v-model="re_phone" class="phone" placeholder="请输入您的账号"/>
-				<input type="password" v-model="re_password" class="passwd" placeholder="请设置您的密码"/>
+				<input type="text" v-model="re_phone" class="phone" placeholder="请输入您的账号" maxlength="11"/>
+				<input type="password" v-model="re_password" class="passwd" placeholder="请设置您的密码" maxlength="6"/>
 				<button @click="start_register">注册</button>
 			</view>
 			<view class="user">
@@ -47,8 +47,8 @@
 				this.state=1
 			},
 			async start_login(){
-				if(this.phone.trim().length==11 && this.password.trim().length==7){
-					let {data:res}=await uni.$http.get('/api/login',
+				if(this.phone.trim().length==11 && this.password.trim().length==6){
+					let {data:res}=await uni.$http.post('/api/login',
 						{'phone':this.phone,'password':this.password},
 					)
 					if(res.code==200){
@@ -66,11 +66,13 @@
 							'icon':''
 						})
 					}
+					this.phone=''
+					this.password=''
 				}
 			},
 			async start_register(){
-				if(this.re_phone.trim().length==11 && this.re_password.trim().length==7){
-					let {data:res}=await uni.$http.get('/api/register',
+				if(this.re_phone.trim().length==11 && this.re_password.trim().length==6){
+					let {data:res}=await uni.$http.post('/api/register',
 						{'re_phone':this.re_phone,'re_password':this.re_password},
 					)
 					if(res.code==200){
@@ -85,6 +87,8 @@
 							'icon':''
 						})
 					}
+					this.re_phone=''
+					this.re_password=''
 				}
 			}
 		}
