@@ -249,7 +249,7 @@ AI-Drama-FullStack/
 ### 9. 📦 前后端分离架构
 前端采用 UniApp 负责界面交互与用户体验，后端采用 Flask 提供功能 API 接口，职责边界清晰，便于团队协作与后期维护。
 
-  
+---
 ## 📄 开源协议
 
 本项目采用 [MIT License](LICENSE) 开源许可证。
