@@ -124,36 +124,39 @@ create database if not exists AI_chat
 ### 2. 数据表结构
 
 聊天记录表（chat_info）
+```sql
 CREATE TABLE `chat_info` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '序号',
   `duser` varchar(500) NOT NULL COMMENT '提问',
   `AI` varchar(500) NOT NULL COMMENT '回答',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
-
+```
 教师问答表（teacher_info）
+```sql
 CREATE TABLE `teacher_info` (
    `id` int NOT NULL AUTO_INCREMENT COMMENT '序号',
    `duser` varchar(500) NOT NULL COMMENT '提问',
    `AI` varchar(500) NOT NULL COMMENT '回答',
    PRIMARY KEY (`id`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
- 
+ ```
 历史记录表（history）
+```sql
 CREATE TABLE `history` (
   `id` int NOT NULL AUTO_INCREMENT,
   `card` varchar(5000) NOT NULL,
 	`update_time` datetime not null,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
-
+```
 ### 3. 触发器（自动更新时间）
-
+```sql
 create trigger update_trigger
 before insert on history
 for each ROW
 set new.update_time=NOW()
-
+```
 ### 4. 环境变量配置
 env
 MYSQL_HOST=localhost
