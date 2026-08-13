@@ -158,16 +158,16 @@ for each ROW
 set new.update_time=NOW()
 ```
 ### 4. 环境变量配置
-env
+```env
 MYSQL_HOST=localhost
 MYSQL_PORT=3306
 MYSQL_USER=root
 MYSQL_PASSWORD=your-password
 MYSQL_DATABASE=AI_chat
 MYSQL_DATABASE=PlayLets
-
+```
 ## 📁 项目结构
-text
+```text
 AI-Drama-FullStack/
 ├── pages/                      # 页面目录
 │   ├── index/                  # 首页
@@ -192,6 +192,7 @@ AI-Drama-FullStack/
 ├── .gitignore                  # Git 忽略文件
 ├── LICENSE                     # MIT 开源协议
 └── README.md                   # 项目说明
+```
 ##🏆 技术亮点
 1. 🔐 API 签名破解
 成功破解芒果 TV 搜索接口的 MD5 动态签名机制，通过 JS 逆向分析还原签名算法，实现数据的高效采集。
