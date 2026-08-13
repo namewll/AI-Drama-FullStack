@@ -77,19 +77,19 @@
 
 | 首页 | 详情页 | 搜索页 |
 |------|--------|--------|
-| ![首页](screenshots/1.png) | ![详情页](screenshots/2.png) | ![搜索页](screenshots/3.png) |
+| ![首页](screenshots/1.png) | ![详情页](screenshots/3.png) | ![搜索页](screenshots/2.png) |
 
 | 分类筛选 | 登录注册 | 个人中心 |
 |------|--------|--------|
-| ![分类筛选](screenshots/13.png) | ![登录注册](screenshots/7.png) | ![个人中心](screenshots/4.png) |
+| ![分类筛选](screenshots/4.png) | ![登录注册](screenshots/20.png) | ![个人中心](screenshots/5.png) |
 
 | 收藏与历史 | AI 智能助手 | 数据分析看板 |
 |------|--------|--------|
-| ![收藏历史](screenshots/10.png) | ![AI助手](screenshots/5.png) | ![数据分析](screenshots/12.png) |
+| ![收藏历史](screenshots/6.png) | ![AI助手](screenshots/7.png) | ![数据分析](screenshots/18.png) |
 
-| 播放与选集 | 设置与关于 | 通知与反馈 |
+| 播放与选集 | 角色切换 | 通知与反馈 |
 |------|--------|--------|
-| ![播放页](screenshots/17.png) | ![设置关于](screenshots/19.png) | ![通知反馈](screenshots/22.png) |
+| ![播放页](screenshots/3.png) | ![角色切换](screenshots/8.png) | ![删除操作](screenshots/14.png) |
 
 ---
 
