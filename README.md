@@ -87,9 +87,9 @@
 |------|--------|--------|
 | ![收藏历史](screenshots/6.png) | ![AI助手](screenshots/7.png) | ![数据分析](screenshots/18.png) |
 
-| 播放与选集 | 角色切换 | 通知与反馈 |
+| 数据库同步 | 角色切换 | 通知与反馈 |
 |------|--------|--------|
-| ![播放页](screenshots/3.png) | ![角色切换](screenshots/8.png) | ![删除操作](screenshots/14.png) |
+| ![数据库同步](screenshots/11.png) | ![角色切换](screenshots/8.png) | ![删除操作](screenshots/14.png) |
 
 ---
 
